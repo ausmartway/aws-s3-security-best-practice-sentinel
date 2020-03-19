@@ -6,7 +6,7 @@ allow_private_only = rule {
 			rc.change.actions is ["create"]
 	} as _, frc {
 		frc.change.after.acl is  "private"
-	}
+	} 
 }
 
 main = rule {
