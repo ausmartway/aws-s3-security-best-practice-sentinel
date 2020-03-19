@@ -1,0 +1,85 @@
+import "strings"
+
+providers = {
+	"aws": {
+		"alias": "",
+		"config": {
+			"region": {
+				"constant_value": "ap-southeast-2",
+			},
+		},
+		"module_address":      "",
+		"name":                "aws",
+		"provider_config_key": "aws",
+		"version_constraint":  "",
+	},
+}
+
+resources = {
+	"aws_s3_bucket.macgroup-dev-s3": {
+		"address": "aws_s3_bucket.macgroup-dev-s3",
+		"config": {
+			"bucket": {
+				"constant_value": "macgroup-dev-s3",
+			},
+			"tags": {
+				"constant_value": {
+					"Environment": "Dev",
+					"Name":        "macgroup-dev-s3",
+				},
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "macgroup-dev-s3",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_s3_bucket",
+	},
+	"aws_s3_bucket.macgroup-prod-s3": {
+		"address": "aws_s3_bucket.macgroup-prod-s3",
+		"config": {
+			"acl": {
+				"constant_value": "authenticated-read",
+			},
+			"bucket": {
+				"constant_value": "macgroup-prod-s3",
+			},
+			"tags": {
+				"constant_value": {
+					"Environment": "Prod",
+					"Name":        "macgroup-prod-s3",
+				},
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "macgroup-prod-s3",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_s3_bucket",
+	},
+}
+
+provisioners = {}
+
+variables = {}
+
+outputs = {}
+
+module_calls = {}
+
+strip_index = func(addr) {
+	s = strings.split(addr, ".")
+	for s as i, v {
+		s[i] = strings.split(v, "[")[0]
+	}
+
+	return strings.join(s, ".")
+}
