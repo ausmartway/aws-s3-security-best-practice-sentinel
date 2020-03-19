@@ -13,5 +13,5 @@ enforce_s3_mfa_delete = rule {
 	}
 }
 main = rule {
-	enforce_s3_mfa)_delete
+	enforce_s3_mfa_delete
 }
