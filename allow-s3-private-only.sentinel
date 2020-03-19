@@ -1,5 +1,5 @@
 import "tfplan/v2" as tfplan
-enforcing_private_only = rule {
+allow_private_only = rule {
 	all filter tfplan.resource_changes as _, rc {
 		rc.type is "aws_s3_bucket" and
 			rc.mode is "managed" and
@@ -10,5 +10,5 @@ enforcing_private_only = rule {
 }
 
 main = rule {
-	enforcing_private_only
+	allow_private_only
 }
