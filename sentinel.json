@@ -1,0 +1,14 @@
+{
+    "mock": {
+      "tfconfig": "mocks/mock-tfconfig.sentinel",
+      "tfconfig/v1": "mocks/mock-tfconfig.sentinel",
+      "tfconfig/v2": "mocks/mock-tfconfig-v2.sentinel",
+      "tfplan": "mocks/mock-tfplan.sentinel",
+      "tfplan/v1": "mocks/mock-tfplan.sentinel",
+      "tfplan/v2": "mocks/mock-tfplan-v2.sentinel",
+      "tfrun": "mocks/mock-tfrun.sentinel",
+      "tfstate": "mocks/mock-tfstate.sentinel",
+      "tfstate/v1": "mocks/mock-tfstate.sentinel",
+      "tfstate/v2": "mocks/mock-tfstate-v2.sentinel"
+    }
+  }
