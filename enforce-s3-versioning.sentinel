@@ -12,6 +12,5 @@ enforce_s3_versioning = rule {
 	}
 }
 main = rule {
-
 	enforce_s3_versioning
 }

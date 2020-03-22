@@ -1,13 +1,18 @@
 import "tfplan/v2" as tfplan
-allow_private_only = rule {
-	all filter tfplan.resource_changes as _, rc {
+
+only_has_private = true
+
+list_of_none_private_acl_s3_buckets = filter tfplan.resource_changes as _, rc {
 		rc.type is "aws_s3_bucket" and
 			rc.mode is "managed" and
-			rc.change.actions is ["create"]
-	} as _, frc {
-		frc.change.after.acl is  "private"
+			rc.change.actions is ["create"] and
+			rc.change.after.acl is not "private"
 	} 
+
+allow_private_only = rule {
+	length(list_of_none_private_acl_s3_buckets) == 0
 }
+
 
 main = rule {
 	allow_private_only
