@@ -14,7 +14,7 @@ policy "allow-s3-private-only" {
 #     enforcement_level = "soft-mandatory"
 # }
 
-# policy "enforce-s3-versioning" {
-#     enforcement_level = "soft-mandatory"
-# }
+policy "enforce-s3-versioning" {
+    enforcement_level = "soft-mandatory"
+}
 
