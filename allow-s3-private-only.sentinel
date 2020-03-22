@@ -4,7 +4,7 @@ list_of_none_private_acl_s3_buckets = filter tfplan.resource_changes as _, rc {
 			rc.type is "aws_s3_bucket" and
 			rc.mode is "managed" and
 			rc.change.actions is ["create"] and
-			rc.change.after.acl is not "private"
+			rc.change.after.acl in ["private","computed"]
 }
 
 print(list_of_none_private_acl_s3_buckets)
