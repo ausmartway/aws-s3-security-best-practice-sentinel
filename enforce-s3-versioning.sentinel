@@ -9,7 +9,7 @@ list_of_s3_bucket_without_versioning =  filter tfplan.resource_changes as _, rc 
 
 print(list_of_s3_bucket_without_versioning)
 
-rule enforce_s3_versioning {
+enforce_s3_versioning = rule  {
  length(list_of_s3_bucket_without_versioning)==0
 }
 
