@@ -17,16 +17,16 @@ no_default_versioning_block = rule {
 	}
 }
 
-//make sure every bucket with versioning block as enabled set to true
-enforce_s3_versioning = rule when no_default_versioning_block is true {
+//make sure every bucket with versioning block has mfa_delete set as true
+enforce_s3_versioning_mfa_delete = rule when no_default_versioning_block is true {
 	all all_s3_buckets as _, bucket {
 		all bucket.change.after.versioning as versioning {
-			versioning.enabled is true
+			versioning.mfa_delete is true
 		}
 	}
 }
 
 main = rule {
 	no_default_versioning_block and
-	enforce_s3_versioning
+	enforce_s3_versioning_mfa_delete
 }
