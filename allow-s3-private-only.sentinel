@@ -1,5 +1,7 @@
 import "tfplan/v2" as tfplan
 
+//find all new aws_s3_bucket that is not private or default(computed)
+
 list_of_none_private_acl_s3_buckets = filter tfplan.resource_changes as _, rc {
 			rc.type is "aws_s3_bucket" and
 			rc.mode is "managed" and
@@ -7,8 +9,14 @@ list_of_none_private_acl_s3_buckets = filter tfplan.resource_changes as _, rc {
 			rc.change.after.acl not in ["private","computed"]
 }
 
-print(list_of_none_private_acl_s3_buckets)
+for list_of_none_private_acl_s3_buckets as bucket{
+	print(bucket.name+"'s acl is : " + bucket.acl + ", this is not compliant.") 
+}
 
+//debug
+// print(list_of_none_private_acl_s3_buckets)
+
+//see if the list is empty
 allow_private_only = rule {
 	length(list_of_none_private_acl_s3_buckets) == 0
 }
