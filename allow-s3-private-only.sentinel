@@ -14,7 +14,7 @@ for list_of_none_private_acl_s3_buckets as _,bucket{
 }
 
 //debug
-print(list_of_none_private_acl_s3_buckets)
+// print(list_of_none_private_acl_s3_buckets)
 
 //see if the list is empty
 allow_private_only = rule {
