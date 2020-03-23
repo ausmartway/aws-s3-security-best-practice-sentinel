@@ -8,7 +8,13 @@ list_of_all_public_read_write_acl_s3_buckets = filter tfplan.resource_changes as
 			rc.change.after.acl in ["public-read-write"]
 }
 
-print(list_of_all_public_read_write_acl_s3_buckets)
+//print out adress for non-compliant bucket
+for list_of_all_public_read_write_acl_s3_buckets as _,bucket{
+	print(bucket.address+"'s acl is : " + bucket.change.after.acl + ", this is not compliant.") 
+}
+
+//debug code
+// print(list_of_all_public_read_write_acl_s3_buckets)
 
 //test if the list is empty
 disallow_public_read_write_acl = rule {
