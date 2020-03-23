@@ -9,7 +9,7 @@ list_of_none_private_acl_s3_buckets = filter tfplan.resource_changes as _, rc {
 			rc.change.after.acl not in ["private","computed"]
 }
 
-for list_of_none_private_acl_s3_buckets as bucket{
+for list_of_none_private_acl_s3_buckets as _,bucket{
 	print(bucket.address+"'s acl is : " + bucket.change.after.acl + ", this is not compliant.") 
 }
 
