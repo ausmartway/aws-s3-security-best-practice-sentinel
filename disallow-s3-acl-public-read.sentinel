@@ -7,7 +7,7 @@ list_of_all_public_read_acl_s3_buckets = filter tfplan.resource_changes as _, rc
 			rc.change.after.acl not in ["public-read"]
 }
 
-print(list_of_none_private_acl_s3_buckets)
+print(list_of_all_public_read_acl_s3_buckets)
 
 disallow_public_read_acl = rule {
 	length(list_of_all_public_read_acl_s3_buckets) == 0
