@@ -1,5 +1,6 @@
 import "tfplan/v2" as tfplan
 
+//find all aws_s3_bucket that has acl="public-read"
 list_of_all_public_read_acl_s3_buckets = filter tfplan.resource_changes as _, rc {
 			rc.type is "aws_s3_bucket" and
 			rc.mode is "managed" and
@@ -9,6 +10,7 @@ list_of_all_public_read_acl_s3_buckets = filter tfplan.resource_changes as _, rc
 
 print(list_of_all_public_read_acl_s3_buckets)
 
+//test if the list is empty
 disallow_public_read_acl = rule {
 	length(list_of_all_public_read_acl_s3_buckets) == 0
 }
@@ -17,20 +19,3 @@ disallow_public_read_acl = rule {
 main = rule {
 	disallow_public_read_acl
 }
-
-
-
-// import "tfplan/v2" as tfplan
-// deny_s3_public_read_acl = rule {
-// 	all filter tfplan.resource_changes as _, rc {
-// 		rc.type is "aws_s3_bucket" and
-// 			rc.mode is "managed" and
-// 			rc.change.actions is ["create"]
-// 	} as _, frc {
-// 		frc.change.after.acl is not "public-read"
-// 	}
-// }
-
-// main = rule {
-// 	deny_s3_public_read_acl
-// }
