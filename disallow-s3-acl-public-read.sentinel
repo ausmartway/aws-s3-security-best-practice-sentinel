@@ -1,14 +1,36 @@
 import "tfplan/v2" as tfplan
-deny_s3_public_read_acl = rule {
-	all filter tfplan.resource_changes as _, rc {
-		rc.type is "aws_s3_bucket" and
+
+list_of_all_public_read_acl_s3_buckets = filter tfplan.resource_changes as _, rc {
+			rc.type is "aws_s3_bucket" and
 			rc.mode is "managed" and
-			rc.change.actions is ["create"]
-	} as _, frc {
-		frc.change.after.acl is not "public-read"
-	}
+			rc.change.actions is ["create"] and
+			rc.change.after.acl not in ["public-read"]
 }
 
-main = rule {
-	deny_s3_public_read_acl
+print(list_of_none_private_acl_s3_buckets)
+
+disallow_public_read_acl = rule {
+	length(list_of_all_public_read_acl_s3_buckets) == 0
 }
+
+
+main = rule {
+	disallow_public_read_acl
+}
+
+
+
+// import "tfplan/v2" as tfplan
+// deny_s3_public_read_acl = rule {
+// 	all filter tfplan.resource_changes as _, rc {
+// 		rc.type is "aws_s3_bucket" and
+// 			rc.mode is "managed" and
+// 			rc.change.actions is ["create"]
+// 	} as _, frc {
+// 		frc.change.after.acl is not "public-read"
+// 	}
+// }
+
+// main = rule {
+// 	deny_s3_public_read_acl
+// }
