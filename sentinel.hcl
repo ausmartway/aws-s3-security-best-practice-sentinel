@@ -2,7 +2,7 @@ policy "allow-s3-private-only" {
     enforcement_level = "soft-mandatory"
 }
 
-policy "disallow-s3-acl-public-read_write" {
+policy "disallow-s3-acl-public-read-write" {
     enforcement_level = "soft-mandatory"
 }
 
