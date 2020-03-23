@@ -10,6 +10,15 @@ all_s3_buckets =  filter tfplan.resource_changes as _, rc {
 
 print(all_s3_buckets)
 
+no_default_vault = rule {
+	all all_s3_buckets as _, bucket {
+
+		print(length(bucket.change.after.versioning)) and 
+		length(bucket.change.after.versioning)>0
+
+	}
+}
+
 enforce_s3_versioning = rule  {
 	all all_s3_buckets as _, bucket {
 		all bucket.change.after.versioning as versioning {
@@ -19,5 +28,6 @@ enforce_s3_versioning = rule  {
 }
 
 main = rule {
-	enforce_s3_versioning
+	no_default_vault
+//	enforce_s3_versioning
 }
