@@ -28,6 +28,6 @@ enforce_s3_versioning = rule when no_default_vault is true {
 }
 
 main = rule {
-	no_default_vault
+	no_default_vault and
 	enforce_s3_versioning
 }
