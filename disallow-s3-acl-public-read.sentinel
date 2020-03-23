@@ -4,7 +4,7 @@ list_of_all_public_read_acl_s3_buckets = filter tfplan.resource_changes as _, rc
 			rc.type is "aws_s3_bucket" and
 			rc.mode is "managed" and
 			rc.change.actions is ["create"] and
-			rc.change.after.acl not in ["public-read"]
+			rc.change.after.acl in ["public-read"]
 }
 
 print(list_of_all_public_read_acl_s3_buckets)
