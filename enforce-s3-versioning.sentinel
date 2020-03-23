@@ -1,16 +1,21 @@
 import "tfplan/v2" as tfplan
 
-list_of_s3_bucket_without_versioning =  filter tfplan.resource_changes as _, rc {
+all_s3_buckets =  filter tfplan.resource_changes as _, rc {
 		rc.type is "aws_s3_bucket" and
 			rc.mode is "managed" and
-    	rc.change.actions is ["create"] and
-		rc.change.after.versioning.enabled is true
+    	rc.change.actions is ["create"]  // and
+		// rc.change.after.versioning.enabled is true
+
 }
 
-print(list_of_s3_bucket_without_versioning)
+print(all_s3_buckets)
 
 enforce_s3_versioning = rule  {
- length(list_of_s3_bucket_without_versioning)==0
+	all all_s3_buckets as _, bucket {
+		all bucket.change.after.versioning as versioning {
+			versioning.enabled is true
+		}
+	}
 }
 
 main = rule {
