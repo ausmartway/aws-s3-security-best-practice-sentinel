@@ -2,10 +2,9 @@ import "tfplan/v2" as tfplan
 
 list_of_s3_bucket_without_versioning =  filter tfplan.resource_changes as _, rc {
 		rc.type is "aws_s3_bucket" and
-			rc.mode is "managed" 
-		// 	and
-    	// rc.change.actions is ["no-op"] and
-		// rc.change.after.versioning.enabled in  ["false","true"]
+			rc.mode is "managed" and
+    	rc.change.actions is ["create"] and
+		rc.change.after.versioning.enabled is "true"
 }
 
 print(list_of_s3_bucket_without_versioning)
