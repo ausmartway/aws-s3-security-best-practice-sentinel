@@ -18,7 +18,8 @@ no_default_vault = rule {
 	}
 }
 
-enforce_s3_versioning = rule  {
+enforce_s3_versioning = rule when no_default_vault is true {
+
 	all all_s3_buckets as _, bucket {
 		all bucket.change.after.versioning as versioning {
 			versioning.enabled is true
@@ -28,5 +29,5 @@ enforce_s3_versioning = rule  {
 
 main = rule {
 	no_default_vault
-//	enforce_s3_versioning
+	enforce_s3_versioning
 }
