@@ -1,0 +1,12 @@
+name: sentinel
+on: [push]
+jobs:
+  sentinel-test:
+    runs-on: ubuntu-latest
+    container:
+      image: thrashr888/sentinel-simulator
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Sentinel Test
+        run: sentinel test 
