@@ -1,0 +1,24 @@
+import "tfplan/v2" as tfplan
+
+//find all aws_se_bucket that will be created
+all_s3_buckets =  filter tfplan.resource_changes as _, rc {
+		rc.type is "aws_s3_bucket" and
+			rc.mode is "managed" and
+    	rc.change.actions is ["create"]  
+}
+
+// debug code
+// print(all_s3_buckets)
+
+
+//make sure every bucket has a server-side-encryption block
+all_s3_has_server_side_encryption_configuration_block = rule {
+	all all_s3_buckets as _, bucket {
+		(keys(bucket.change.after) contains "server_side_encryption_configuration") and
+		length(bucket.change.after.server_side_encryption_configuration)>0 
+	}
+}
+
+main = rule {
+	all_s3_has_server_side_encryption_configuration_block 
+}
