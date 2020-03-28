@@ -21,3 +21,7 @@ policy "enforce-s3-versioning-enabled-true" {
 policy "enforce-s3-server-side-encryption-enabled-true" {
     enforcement_level = "soft-mandatory"
 }
+
+policy "enforce-s3-logging-true" {
+    enforcement_level = "advisory"
+}
