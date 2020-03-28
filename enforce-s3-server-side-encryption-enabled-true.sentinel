@@ -5,7 +5,8 @@ violatingS3Buckets =  filter tfplan.resource_changes as _, rc {
 		rc.type is "aws_s3_bucket" and
 			rc.mode is "managed" and
     	(rc.change.actions contains "create" or rc.change.actions contains "update") and
-		(rc.change.after not contains "server_side_encryption_configuration" or length(rc.change.after.server_side_encryption_configuration)==0)
+		(rc.change.after not contains "server_side_encryption_configuration" or 
+			length(rc.change.after.server_side_encryption_configuration)==0)
 }
 
 for violatingS3Buckets as address, bucket{
@@ -14,10 +15,6 @@ for violatingS3Buckets as address, bucket{
 // debug code
 // print(violatingS3Buckets)
 
-enforce_server_side_encryption = rule {
-	length(violatingS3Buckets) == 0
-}
-
 main = rule {
-	enforce_server_side_encryption 
+	length(violatingS3Buckets) == 0
 }
