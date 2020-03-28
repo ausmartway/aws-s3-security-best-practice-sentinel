@@ -1,0 +1,10 @@
+{
+    "global":{
+    },
+    "mock": {
+        "tfplan/v2": "../../mocks/mock-tfplan-v2-aws-s3-logging-not-configured.sentinel"
+    },
+    "test": {
+        "main": false
+    }
+}
