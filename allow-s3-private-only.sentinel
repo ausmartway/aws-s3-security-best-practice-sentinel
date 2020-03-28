@@ -9,8 +9,8 @@ violatingS3Buckets = filter tfplan.resource_changes as _, rc {
 			(rc.change.after.acl else null not in ["private", null])
 }
 
-for violatingS3Buckets as _,bucket{
-	print(bucket.address+"'s acl is : " + bucket.change.after.acl + ", this is not compliant.") 
+for violatingS3Buckets as address, bucket{
+	print(address+"'s acl is : " + bucket.change.after.acl + ", this is missing or not private.") 
 }
 
 //debug
