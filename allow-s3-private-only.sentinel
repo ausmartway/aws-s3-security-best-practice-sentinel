@@ -3,14 +3,14 @@ import "tfplan/v2" as tfplan
 //find all new aws_s3_bucket that is not private or default(computed)
 
 violatingS3Buckets = filter tfplan.resource_changes as _, rc {
-			rc.type is "aws_s3_bucket" and
-			rc.mode is "managed" and
-			(rc.change.actions contains "create" or rc.change.actions contains "update")  and
-			(rc.change.after.acl else null not in ["private", null])
+	rc.type is "aws_s3_bucket" and
+		rc.mode is "managed" and
+		(rc.change.actions contains "create" or rc.change.actions contains "update") and
+		(rc.change.after.acl else null not in ["private", null])
 }
 
-for violatingS3Buckets as address, bucket{
-	print(address+"'s acl is : " + bucket.change.after.acl + ", this is missing or not private.") 
+for violatingS3Buckets as address, bucket {
+	print(address + "'s acl is : " + bucket.change.after.acl + ", this is missing or not private.")
 }
 
 //debug
@@ -20,7 +20,6 @@ for violatingS3Buckets as address, bucket{
 allow_private_only = rule {
 	length(violatingS3Buckets) == 0
 }
-
 
 main = rule {
 	allow_private_only

@@ -1,17 +1,18 @@
 import "tfplan/v2" as tfplan
 
 //find all aws_se_bucket that will be created
-violatingS3Buckets =  filter tfplan.resource_changes as _, rc {
-		rc.type is "aws_s3_bucket" and
-			rc.mode is "managed" and
-    	(rc.change.actions contains "create" or rc.change.actions contains "update") and
-		(rc.change.after not contains "server_side_encryption_configuration" or 
-			length(rc.change.after.server_side_encryption_configuration)==0)
+violatingS3Buckets = filter tfplan.resource_changes as _, rc {
+	rc.type is "aws_s3_bucket" and
+		rc.mode is "managed" and
+		(rc.change.actions contains "create" or rc.change.actions contains "update") and
+		(rc.change.after not contains "server_side_encryption_configuration" or
+			length(rc.change.after.server_side_encryption_configuration) == 0)
 }
 
-for violatingS3Buckets as address, bucket{
-	print(address+" does not have server side encryption configured.") 
+for violatingS3Buckets as address, bucket {
+	print(address + " does not have server side encryption configured.")
 }
+
 // debug code
 // print(violatingS3Buckets)
 

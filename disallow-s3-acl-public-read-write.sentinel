@@ -2,15 +2,15 @@ import "tfplan/v2" as tfplan
 
 //find all aws_s3_bucket that has acl="public-read"
 violatingS3Buckets = filter tfplan.resource_changes as _, rc {
-			rc.type is "aws_s3_bucket" and
-			rc.mode is "managed" and
-			(rc.change.actions contains "create" or rc.change.actions contains "update") and
-			rc.change.after.acl in ["public-read-write"]
+	rc.type is "aws_s3_bucket" and
+		rc.mode is "managed" and
+		(rc.change.actions contains "create" or rc.change.actions contains "update") and
+		rc.change.after.acl in ["public-read-write"]
 }
 
 //print out adress for non-compliant bucket
-for violatingS3Buckets as address, bucket{
-	print(address+"'s acl is : " + bucket.change.after.acl + ", this is not compliant.") 
+for violatingS3Buckets as address, bucket {
+	print(address + "'s acl is : " + bucket.change.after.acl + ", this is not compliant.")
 }
 
 //debug code
@@ -20,7 +20,6 @@ for violatingS3Buckets as address, bucket{
 disallow_public_read_write_acl = rule {
 	length(violatingS3Buckets) == 0
 }
-
 
 main = rule {
 	disallow_public_read_write_acl
