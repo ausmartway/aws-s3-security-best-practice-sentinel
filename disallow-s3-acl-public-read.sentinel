@@ -16,11 +16,6 @@ for violatingS3Buckets as address, bucket {
 // debug code
 // print(list_of_all_public_read_acl_s3_buckets)
 
-//test if the list is empty
-disallow_public_read_acl = rule {
-	length(violatingS3Buckets) == 0
-}
-
 main = rule {
-	disallow_public_read_acl
+	length(violatingS3Buckets) == 0
 }
