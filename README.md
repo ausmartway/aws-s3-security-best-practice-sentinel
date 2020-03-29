@@ -29,14 +29,3 @@ Please raise any issues you have via this [link](https://github.com/ausmartway/a
 You can create pull request to add more policies into this repo, it is expected that each of your policy should have at least one pass and one fail test case, and their corresponding mocks.
 
 You can find the test cases in the test directory and mocks in mocks directory.
-
-
-
-
-
-
-
-
-
-
-
