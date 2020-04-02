@@ -23,5 +23,5 @@ policy "enforce-s3-server-side-encryption-enabled-true" {
 }
 
 policy "enforce-s3-logging-true" {
-    enforcement_level = "soft-mandatory"
+    enforcement_level = "hard-mandatory"
 }
