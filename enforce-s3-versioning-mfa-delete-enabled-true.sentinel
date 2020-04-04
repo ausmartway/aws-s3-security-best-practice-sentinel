@@ -23,6 +23,7 @@ s3_with_versioning_block = filter tfplan.resource_changes as _, rc {
 		keys(rc.change.after) contains "versioning"
 }
 
+//find all aws_s3_bucket that will be created/updated and has versioning block, but don't have mfa_delete set, or have it set to false
 for s3_with_versioning_block as address, bucket {
 	if bucket.change.after.versioning[0] not contains "mfa_delete" {
 		print(address + " doesn't have mfa_delete attribute set.")
