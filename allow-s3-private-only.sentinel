@@ -1,6 +1,6 @@
 import "tfplan/v2" as tfplan
 
-//find all new aws_s3_bucket that is not private or default(computed)
+//find all new aws_s3_bucket that is not private or default(computed) - acl will default to private
 
 violatingS3Buckets = filter tfplan.resource_changes as _, rc {
 	rc.type is "aws_s3_bucket" and

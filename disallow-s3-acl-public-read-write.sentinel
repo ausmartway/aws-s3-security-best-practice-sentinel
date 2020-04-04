@@ -1,6 +1,6 @@
 import "tfplan/v2" as tfplan
 
-//find all aws_s3_bucket that has acl="public-read"
+//find all aws_s3_bucket that has acl="public-read-write"
 violatingS3Buckets = filter tfplan.resource_changes as _, rc {
 	rc.type is "aws_s3_bucket" and
 		rc.mode is "managed" and
