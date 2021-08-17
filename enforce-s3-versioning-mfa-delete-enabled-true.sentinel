@@ -6,7 +6,7 @@ s3_without_versioning_block = filter tfplan.resource_changes as _, rc {
 		rc.mode is "managed" and
 		(rc.change.actions contains "create" or rc.change.actions contains "update") and
 		(keys(rc.change.after) not contains "versioning") and
-		(rc.module_address not in ["module.aws_s3CBA_demo_module"] )
+		(rc.module_address not in ["module.CBA_demo_module"] )
 }
 
 number_of_vialating_s3 = 0
