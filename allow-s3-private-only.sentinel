@@ -1,5 +1,6 @@
 import "tfplan/v2" as tfplan
 
+param exceptionlist
 //find all new aws_s3_bucket that is not private or default(computed) - acl will default to private
 
 violatingS3Buckets = filter tfplan.resource_changes as _, rc {
@@ -7,7 +8,7 @@ violatingS3Buckets = filter tfplan.resource_changes as _, rc {
 		rc.mode is "managed" and
 		(rc.change.actions contains "create" or rc.change.actions contains "update") and
 		(rc.change.after.acl else null not in ["private", null]) and
-		(rc.module_address not in ["module.CBA_demo_module"] )
+		(rc.module_address not in exceptionlist)
 }
 
 for violatingS3Buckets as address, bucket {
