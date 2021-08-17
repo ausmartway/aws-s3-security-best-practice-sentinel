@@ -1,5 +1,7 @@
 import "tfplan/v2" as tfplan
 
+param exceptionlist
+
 number_of_vialating_s3 = 0
 
 //find all aws_se_bucket that don't have a logging block
