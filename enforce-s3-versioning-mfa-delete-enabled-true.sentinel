@@ -12,7 +12,7 @@ s3_without_versioning_block = filter tfplan.resource_changes as _, rc {
 number_of_vialating_s3 = 0
 
 for s3_without_versioning_block as address, bucket {
-	print(address + " doesn't have a versioning block configured.")
+	print(address + " doesn't have a versioning block configured." + "module_address:"+module_address)
 	number_of_vialating_s3 = number_of_vialating_s3 + 1
 }
 
