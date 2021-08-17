@@ -8,7 +8,8 @@ violatingS3Buckets = filter tfplan.resource_changes as _, rc {
 		rc.mode is "managed" and
 		(rc.change.actions contains "create" or rc.change.actions contains "update") and
 		(rc.change.after.acl else null not in ["private", null]) and
-		(rc.module_address not in exceptionlist)
+		(rc.module_address not in exceptionlist) and
+		(rc.address not in exceptionlist)
 }
 
 for violatingS3Buckets as address, bucket {
