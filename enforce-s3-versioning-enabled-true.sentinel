@@ -1,13 +1,11 @@
 import "tfplan/v2" as tfplan
 
-param exceptionlist
 //find all aws_se_bucket that don't have a versioning block
 s3_without_versioning_block = filter tfplan.resource_changes as _, rc {
 	rc.type is "aws_s3_bucket" and
 		rc.mode is "managed" and
 		(rc.change.actions contains "create" or rc.change.actions contains "update") and
-		keys(rc.change.after) not contains "versioning" and
-		rc.module_address not in exceptionlist
+		keys(rc.change.after) not contains "versioning" 
 }
 
 number_of_vialating_s3 = 0
@@ -22,8 +20,7 @@ s3_with_versioning_block = filter tfplan.resource_changes as _, rc {
 	rc.type is "aws_s3_bucket" and
 		rc.mode is "managed" and
 		(rc.change.actions contains "create" or rc.change.actions contains "update") and
-		keys(rc.change.after) contains "versioning" and
-		rc.module_address not in exceptionlist
+		keys(rc.change.after) contains "versioning" 
 }
 
 for s3_with_versioning_block as address, bucket {

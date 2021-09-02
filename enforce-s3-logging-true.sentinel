@@ -1,7 +1,5 @@
 import "tfplan/v2" as tfplan
 
-param exceptionlist
-
 number_of_vialating_s3 = 0
 
 //find all aws_se_bucket that don't have a logging block
@@ -9,8 +7,7 @@ s3_without_logging_block = filter tfplan.resource_changes as _, rc {
 	rc.type is "aws_s3_bucket" and
 		rc.mode is "managed" and
 		(rc.change.actions contains "create" or rc.change.actions contains "update") and
-		length(rc.change.after.logging) == 0 and
-		rc.module_address not in exceptionlist
+		length(rc.change.after.logging) == 0 
 }
 
 for s3_without_logging_block as address, bucket {
